@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Город Домино — найди свой дом</title>
+<meta name="description" content="1 подписчик = 1 дом. Найди свой дом в городе Домино по нику из Instagram.">
+<meta property="og:title" content="Город Домино — найди свой дом 🏠">
+<meta property="og:description" content="1 подписчик = 1 дом. Введи ник из Instagram и найди свой дом.">
+<meta name="theme-color" content="#2b1f3d">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2b1f3d;--y:#ffd23f;--y2:#ffe9a0;--card:rgba(32,22,46,.94);--line:#c79a3a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;overflow:hidden;background:#2b1f3d;font-family:Rubik,system-ui,sans-serif;color:#fff;overscroll-behavior:none}
+#c{position:fixed;inset:0;width:100%;height:100%;touch-action:none;display:block}
+#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.lb{position:absolute;left:0;top:0;display:none;transform-origin:50% 100%;background:#fff;color:#1d1430;font-weight:800;font-size:13px;padding:4px 10px;border-radius:20px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.35);text-align:center}
+.lb::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:#fff}
+.lb.ft{background:var(--y);color:var(--ink)} .lb.ft::after{border-top-color:var(--y)}
+.lb small{display:block;font-size:11px;font-weight:700;opacity:.8}
+.lb .sh{font-style:normal;background:#7fe8ff;color:#0d3b4a;border-radius:8px;padding:1px 5px;margin-right:5px;font-size:10px}
+.lb.sel{background:var(--y);color:var(--ink);font-size:15px;box-shadow:0 0 0 5px rgba(255,210,63,.45),0 6px 18px rgba(0,0,0,.5)} .lb.sel::after{border-top-color:var(--y)}
+#top{position:fixed;left:0;right:0;top:0;padding:calc(env(safe-area-inset-top) + 12px) 14px 0;pointer-events:none}
+#top h1{margin:0;font-weight:900;font-size:26px;letter-spacing:.5px;text-shadow:0 3px 0 var(--ink),0 0 12px rgba(0,0,0,.4)}
+#top .sub{color:var(--y);font-weight:800;font-size:13px;margin-top:2px;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.srch{display:flex;gap:8px;margin-top:10px;pointer-events:auto}
+.srch input{flex:1;min-width:0;border:3px solid var(--y);background:#fff8e6;color:var(--ink);font:700 16px Rubik,sans-serif;padding:11px 14px;border-radius:16px;outline:none}
+.srch button{border:0;background:var(--y);color:var(--ink);font:900 16px Rubik,sans-serif;padding:0 16px;border-radius:16px;box-shadow:0 3px 0 #b88a00}
+.news{margin-top:10px;display:flex;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;pointer-events:auto}
+.news b{flex:none;background:var(--y);color:var(--ink);font-weight:900;font-size:12px;padding:8px 10px}
+.news .tk{flex:1;overflow:hidden;white-space:nowrap}
+#ticker{display:inline-block;font-weight:700;font-size:13px;padding:8px 0;animation:tk 70s linear infinite}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+#side{position:fixed;right:12px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
+#side button{width:48px;height:48px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:#fff;font:900 22px Rubik,sans-serif}
+#bottom{position:fixed;left:0;right:0;bottom:0;padding:0 12px calc(env(safe-area-inset-bottom) + 12px);display:flex;flex-direction:column;gap:8px;pointer-events:none}
+#bottom .bb{display:flex;gap:8px;pointer-events:auto}
+#bottom .bb button{flex:1;border:3px solid #1c1428;color:#fff;font:900 15px Rubik,sans-serif;padding:13px 6px;border-radius:16px}
+#bSights{background:#2f8f5b}#bVote{background:#d2453a}
+#bottom .ft2{font-size:12px;color:#d9cdea;text-align:center;text-shadow:0 1px 4px #000}
+#bottom .ft2 a{color:var(--y)}
+#secretSign{position:fixed;left:0;top:0;display:none;background:var(--card);border:3px solid var(--y);border-radius:16px;padding:8px 12px;font-weight:900;font-size:13px;text-align:center;cursor:pointer}
+#secretSign i{display:block;font-style:normal;color:var(--y);font-size:11px;margin-top:2px}
+#card{position:fixed;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom) + 118px);display:none;background:var(--card);border:3px solid var(--y);border-radius:22px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+#card .c0{font-weight:900;font-size:18px;color:var(--y)}#card .c1{font-weight:900;font-size:24px;margin-top:4px;word-break:break-all}
+#card .c2{font-weight:600;font-size:15px;margin-top:6px;line-height:1.35}#card .c3{font-size:12.5px;color:#cfc2e2;margin-top:10px}
+.row{display:flex;gap:8px;margin-top:12px}.row button,.row a{flex:1;text-align:center;text-decoration:none;border:0;border-radius:14px;font:900 15px Rubik,sans-serif;padding:12px 8px}
+.row button,.btn{background:var(--y);color:var(--ink)}.btn2{background:#4a5df5;color:#fff}.btn{background:#4a5df5;color:#fff}
+.x{position:absolute;right:10px;top:8px;background:none;border:0;color:#fff;font-size:22px;padding:4px 8px}
+#modal{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;background:rgba(10,6,20,.55)}
+#modal .in{position:relative;width:100%;max-width:560px;max-height:82vh;overflow:auto;background:var(--card);border:3px solid var(--y);border-bottom:0;border-radius:26px 26px 0 0;padding:20px 16px calc(env(safe-area-inset-bottom) + 20px)}
+#modal h2{margin:0 0 4px;font-weight:900;font-size:24px}#modal p{margin:0 0 14px;color:#d9cdea;font-size:14px}
+.it{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:2px solid rgba(199,154,58,.5);border-radius:16px;padding:10px;margin-bottom:8px}
+.it .e{font-size:28px;width:38px;text-align:center}.it div{flex:1;min-width:0}.it b{display:block;font-size:15px}.it i{display:block;font-style:normal;font-size:12px;color:#cfc2e2;overflow:hidden;text-overflow:ellipsis}
+.it button{border:0;background:var(--y);color:var(--ink);font:900 13px Rubik,sans-serif;padding:9px 12px;border-radius:12px}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font:800 18px Rubik,sans-serif;padding:15px 16px;border-radius:16px;margin-bottom:9px}
+.built{font-size:13px;color:#cfc2e2;margin-top:8px;line-height:1.4}
+#welcome{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;background:linear-gradient(180deg,rgba(43,31,61,.55),rgba(43,31,61,.85));text-align:center}
+#welcome h2{margin:0;font-weight:900;font-size:clamp(30px,9vw,46px);line-height:1.05;text-shadow:0 4px 0 var(--ink)}
+#welcome .t2{color:var(--y);font-weight:800;font-size:17px;margin:10px 0 22px}
+.board{width:100%;max-width:420px;background:linear-gradient(180deg,#c98a4b,#a86a33);border:5px solid #6b4224;border-radius:22px;padding:18px 16px 16px;box-shadow:0 14px 40px rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.25)}
+.board h3{margin:0 0 12px;color:#2b1a0e;font-weight:900;font-size:24px}
+.board input{width:100%;border:3px dashed #6b4224;background:#fff8e6;color:var(--ink);font:700 18px Rubik,sans-serif;padding:14px;border-radius:14px;text-align:center;outline:none}
+.board button{width:100%;margin-top:10px;border:0;background:#3a2414;color:var(--y);font:900 20px Rubik,sans-serif;padding:15px;border-radius:14px}
+#welcome .t3{margin-top:14px;font-size:14px;color:#e6dcf2}
+#walk{margin-top:14px;background:none;border:0;color:#fff;font:800 16px Rubik,sans-serif;text-decoration:underline}
+#welcome .t4{margin-top:10px;font-size:13px}#welcome .t4 a{color:var(--y);font-weight:800}
+#loader{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2b1f3d;z-index:50}
+#loader .d{font-size:64px;animation:b 1s ease-in-out infinite alternate}@keyframes b{to{transform:translateY(-12px) rotate(8deg)}}
+#loader div:last-child{margin-top:12px;font-weight:800;color:var(--y)}
+</style></head>
+<body>
+<canvas id="c"></canvas><div id="labels"></div>
+<div id="secretSign">🔒 СЕКРЕТНАЯ ЛОКАЦИЯ<i>откроется на 2500 подписчиков</i></div>
+<div id="top">
+  <h1>ГОРОД ДОМИНО</h1>
+  <div class="sub">жителей: <span id="pop">1211</span> • один подписчик — один дом</div>
+  <div class="srch"><input id="snick" placeholder="твой ник в Instagram" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="sgo">Найти</button></div>
+  <div class="news"><b>📰 НОВОСТИ</b><div class="tk"><div id="ticker"></div></div></div>
+</div>
+<div id="side"><button id="zin">+</button><button id="zout">−</button><button id="home">⌂</button></div>
+<div id="card"></div>
+<div id="bottom"><div class="bb"><button id="bSights">🏛 Достопримечательности</button><button id="bVote">🗳 Что строим дальше?</button></div>
+  <div class="ft2">Город обновляется с каждым выпуском • <a href="https://instagram.com/domino.gorod" target="_blank">@domino.gorod</a></div></div>
+<div id="modal"><div class="in"></div></div>
+<div id="welcome">
+  <h2>Добро пожаловать<br>в ГОРОД ДОМИНО</h2>
+  <div class="t2">Один подписчик — один дом. Твой уже стоит 🏠</div>
+  <div class="board"><h3>КТО ЗДЕСЬ ЖИВЁТ?</h3><input id="wnick" placeholder="твой ник в Instagram" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="wgo">Найти мой дом</button></div>
+  <div class="t3">Жителей: <span id="pop2">1211</span> • город растёт с каждым выпуском</div>
+  <button id="walk">Просто погулять по городу</button>
+  <div class="t4">Ещё нет дома? <a href="https://instagram.com/domino.gorod" target="_blank">Подпишись на @domino.gorod →</a></div>
+</div>
+<div id="loader"><div class="d">🏠</div><div id="loadtxt">Строим город…</div></div>
+<script type="module">
+import { boot } from './city.js';
+boot().catch(e => { document.getElementById('loadtxt').textContent = 'Ошибка загрузки: ' + e.message; console.error(e); });
+</script>
+</body></html>
