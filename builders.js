@@ -499,8 +499,9 @@ export const BUILD = {
 
 export function buildHouse(type, nick) {
   const g = new THREE.Group();
-  const fn = BUILD[type] || BUILD.std;
-  const h = fn(g, nick);
+  const [t0, ...args] = String(type).split(':');
+  const fn = BUILD[t0] || BUILD.std;
+  const h = fn(g, nick, ...args);
   g.userData.h = h * (g.scale.y || 1);
   const outer = new THREE.Group(); outer.add(g); outer.userData = { h: g.userData.h, inner: g };
   return outer;
