@@ -6,8 +6,9 @@ import { M, box, cyl, sph, cone, gable, windows, buildHouse } from './builders.j
 import './extra.js';
 import './extra2.js';
 import './extra3.js';
+import './extra4.js';
 
-const IG = 'domino.gorod', POP = 1211, SITE = 'gorod-domeno.vercel.app';
+const IG = 'domino.gorod', POP = 2886, SITE = 'gorod-domeno.vercel.app';
 const $ = (s) => document.querySelector(s);
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const lerp = (a, b, k) => a + (b - a) * k;
@@ -17,11 +18,14 @@ const norm = (s) => (s || '').toLowerCase().trim().replace(/^https?:\/\/(www\.)?
 function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const rnd = mulberry(20261106);
 
-const EMO = { capybara: '🦫', shark: '🦈', watermelon: '🍉', pizza: '🍕', pelmen: '🥟', cheburek: '🥟', ferris: '🎡', burj: '🏙', pinkcastle: '🏰', kremlin: '🏯', stadium: '⚽', school: '🏫', pumpkin: '🎃', dog: '🐶', hotdog: '🌭', burger: '🍔', mosque: '🕌', rocket: '🚀', moonrocket: '🌙', f1: '🏎', tv: '📺', pineapple: '🍍', banana: '🍌', cucumber: '🥒', diamond: '💎', chocolate: '🍫', cake: '🧁', bigcastle: '🏰', court: '🏀', jurassic: '🦖', ballet: '🩰', hotel: '🏨', bunker: '🛡', catroof: '🐱', pillow: '🛏', kirik: '🧖', theater: '🎭', dance: '💃', royal: '👑', purple: '💜', blue: '💙', star: '⭐', bunkerhouse: '🛡', best: '🏆', villa: '🏝', castle: '🏰', mansion: '🏡', carhouse: '🚗', bunker: '🛡', poolhouse: '🏊', poolmansion: '🏊', tower: '🏢', apart: '🏢', two: '🏠', court: '🏀', restaurant: '🍽', mall: '🛍', hut: '🌳', farm: '🐄', xmas: '🎄', aquapark: '🌊', pinkheart: '💖', rock: '🪨', kennel: '🐶', flyrocket: '🚀', bear: '🧸', hospital: '🏥', smile: '😊', plane: '✈️', globe: '🌍', titan: '🛡', tuva: '🏳️', armenian: '🇦🇲', icecream: '🍦', mushroom: '🍄', strawberry: '🍓', eiffel: '🗼', cactus: '🌵', pyramid: '🔺', carsmansion: '🏎', kirik: '🧖' };
+const EMO = { capybara: '🦫', shark: '🦈', watermelon: '🍉', pizza: '🍕', pelmen: '🥟', cheburek: '🥟', ferris: '🎡', burj: '🏙', pinkcastle: '🏰', kremlin: '🏯', stadium: '⚽', school: '🏫', pumpkin: '🎃', dog: '🐶', hotdog: '🌭', burger: '🍔', mosque: '🕌', rocket: '🚀', moonrocket: '🌙', f1: '🏎', tv: '📺', pineapple: '🍍', banana: '🍌', cucumber: '🥒', diamond: '💎', chocolate: '🍫', cake: '🧁', bigcastle: '🏰', court: '🏀', jurassic: '🦖', ballet: '🩰', hotel: '🏨', bunker: '🛡', catroof: '🐱', pillow: '🛏', kirik: '🧖', theater: '🎭', dance: '💃', royal: '👑', purple: '💜', blue: '💙', star: '⭐', bunkerhouse: '🛡', best: '🏆', villa: '🏝', yurt: '⛺', apple: '🍎', orange: '🍊', tank: '🪖', donut: '🍩', khinkali: '🥟', flyhouse: '🎈', chips: '🥔', crownhouse: '👑', guitar: '🎸', mug: '☕', ufo: '🛸', billion: '🏢', xmas: '🎄', castle: '🏰', mansion: '🏡', carhouse: '🚗', bunker: '🛡', poolhouse: '🏊', poolmansion: '🏊', tower: '🏢', apart: '🏢', two: '🏠', court: '🏀', restaurant: '🍽', mall: '🛍', hut: '🌳', farm: '🐄', xmas: '🎄', aquapark: '🌊', pinkheart: '💖', rock: '🪨', kennel: '🐶', flyrocket: '🚀', bear: '🧸', hospital: '🏥', smile: '😊', plane: '✈️', globe: '🌍', titan: '🛡', tuva: '🏳️', armenian: '🇦🇲', icecream: '🍦', mushroom: '🍄', strawberry: '🍓', eiffel: '🗼', cactus: '🌵', pyramid: '🔺', carsmansion: '🏎', kirik: '🧖' };
 const emo = (t) => EMO[String(t).split(':')[0]] || '🏠';
-const STREETS = ['Подписчиков', 'Лайков', 'Репостов', 'Капибарная', 'Чебуречная', 'Арбузная', 'Сторис', 'Рилсов', 'Пельменная', 'Комментариев', 'Солнечная', 'Хештегов', 'Дружбы', 'Весёлая', 'Мечтателей', 'Звёздная'];
+const STREETS = ['Подписчиков', 'Лайков', 'Репостов', 'Капибарная', 'Чебуречная', 'Арбузная', 'Сторис', 'Рилсов', 'Пельменная', 'Комментариев', 'Солнечная', 'Хештегов', 'Дружбы', 'Весёлая', 'Мечтателей', 'Звёздная', 'Мэрская', 'Площадная', 'Юртовая', 'Замковая', 'Особняковая', 'Ракетная'];
 const NEWS = [
-  '🏛 В центре города открылась мэрия. Мэра пока нет — выборы скоро',
+  '🕌 Голосование выиграла мечеть — она уже стоит на площади',
+  '🏡 Город перестроен: у каждого свой двор и дорожка к двери',
+  '⬆ Дома теперь можно улучшать — жми «Улучшить» в карточке дома',
+  '🏛 В центре города мэрия. Мэра пока нет — выборы скоро',
   '🌊 Цунами смыло 200 домов у моря — город отстроил их заново',
   '🦫 @artemii45872 заселился в дом-капибару',
   '🥟 На улице Чебуречной пахнет чебуреками — это @morskoy_cheburek',
@@ -36,11 +40,11 @@ const NEWS = [
 const LOT = 6.4, NCX = 4, NCZ = 2, SW = 1.8, ROAD = 7;
 const BW = NCX * LOT, BD = NCZ * LOT;
 const PX = BW + 2 * SW + ROAD, PZ = BD + 2 * SW + ROAD;
-const NB = 7;
+const NB = 10;
 const isPlaza = (bx, bz) => Math.abs(bx) <= 1 && Math.abs(bz) <= 1;
 const CX = (NB + 0.5) * PX, CZ = (NB + 0.5) * PZ;      // centre lines of outer roads
 const PLAZA_W = 3 * PX - ROAD, PLAZA_D = 3 * PZ - ROAD;
-const HALL = { x: 0, z: -13 }, SECRET = { x: 0, z: -CZ - 58 }, VOLC = { x: -330, z: -470 };
+const MOSQ = { x: -34, z: -6 }, HALL = { x: 0, z: -13 }, SECRET = { x: 0, z: -CZ - 58 }, VOLC = { x: -330, z: -470 };
 
 let renderer, scene, camera;
 const houses = [];
@@ -147,7 +151,7 @@ function buildPlaza() {
   // side parks
   for (const s of [-1, 1]) {
     const lawn = new THREE.Mesh(new THREE.PlaneGeometry(26, PLAZA_D - 6).rotateX(-Math.PI / 2), M('#a8d67e')); lawn.position.set(s * (PLAZA_W / 2 - 16), 0.27, 0); g.add(lawn);
-    for (let i = 0; i < 26; i++) { const x = s * (PLAZA_W / 2 - 5 - rnd() * 22), z = (rnd() - 0.5) * (PLAZA_D - 10); if (Math.abs(z) < 2.2) continue; addTree(x, z, 1 + rnd() * 0.4); }
+    for (let i = 0; i < 26; i++) { const x = s * (PLAZA_W / 2 - 5 - rnd() * 22), z = (rnd() - 0.5) * (PLAZA_D - 10); if (Math.abs(z) < 2.2 || Math.hypot(x - MOSQ.x, z - MOSQ.z) < 13) continue; addTree(x, z, 1 + rnd() * 0.4); }
     const path = new THREE.Mesh(new THREE.PlaneGeometry(26, 3).rotateX(-Math.PI / 2), M('#e3d6bd')); path.position.set(s * (PLAZA_W / 2 - 16), 0.28, 0); g.add(path);
     for (let k = 0; k < 3; k++) { box(g, 2.2, 0.5, 0.6, '#a0663d', s * (PLAZA_W / 2 - 8 - k * 7), 0.26, 2.4); }
   }
@@ -187,18 +191,10 @@ function buildPlaza() {
     const bed = new THREE.Mesh(new THREE.CylinderGeometry(3.4, 3.6, 0.5, 20), M('#7a5638')); bed.position.set(bx, 0.5, bz); g.add(bed);
     for (let i = 0; i < 40; i++) { const a = rnd() * 6.28, r = Math.sqrt(rnd()) * 3; flowers.push([bx + Math.cos(a) * r, 0.8, bz + Math.sin(a) * r, 0, 0.3 + rnd() * 0.15]); }
   }
-  // ---- domino sculpture (falling tiles) ----
-  const dg = new THREE.Group(); dg.position.set(-27, 0.26, 12); dg.rotation.y = -0.75; g.add(dg);
-  const dotM = M('#ffffff');
-  for (let i = 0; i < 6; i++) {
-    const t = new THREE.Group(); t.position.set(i * 2.2, 0, 0); t.rotation.z = -Math.min(1.05, Math.max(0, (i - 2.5)) * 0.5) * -1; dg.add(t);
-    const tb = new THREE.Mesh(new THREE.BoxGeometry(0.7, 4.6, 2.4), M('#16223a')); tb.position.y = 2.3; t.add(tb);
-    const ln = new THREE.Mesh(new THREE.BoxGeometry(0.72, 0.1, 2.0), dotM); ln.position.y = 2.3; t.add(ln);
-    const pip = (yy, zz) => { for (const sx of [-1, 1]) { const d = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.05, 10).rotateZ(Math.PI / 2), dotM); d.position.set(sx * 0.36, yy, zz); t.add(d); } };
-    pip(3.5, 0); if (i % 2) { pip(3.0, -0.6); pip(4.0, 0.6); } pip(1.1, 0.5); pip(1.1, -0.5);
-  }
-  dg.children.forEach((tt, i) => { tt.rotation.z = i < 3 ? -(3 - i) * 0.3 : 0; });
-  dg.scale.setScalar(1.4);
+  // ---- mosque (won the vote) ----
+  const mq = buildHouse('mosque', 'mosque'); mq.userData.inner.scale.setScalar(2.7); mq.position.set(MOSQ.x, 0.26, MOSQ.z); mq.rotation.y = 0.5; g.add(mq);
+  const mpad = new THREE.Mesh(new THREE.CircleGeometry(10, 32).rotateX(-Math.PI / 2), M('#e8dfcc')); mpad.position.set(MOSQ.x, 0.27, MOSQ.z); g.add(mpad);
+  POIS.push({ key: 'mosque', x: MOSQ.x, y: 23, z: MOSQ.z, html: '🕌 МЕЧЕТЬ<i>победила в голосовании</i>' });
   inst(new THREE.IcosahedronGeometry(1, 0), WHITE(), flowers, () => FC[Math.floor(rnd() * FC.length)]);
   scene.userData.plaza = g;
 }
@@ -388,7 +384,8 @@ function houseCard(h, found) {
     <div class="nick">@${esc(h.nick)}</div>
     <div class="addr">📍 ${esc(h.addr)}</div>
     ${h.req ? `<div class="chip">${emo(h.type)} ${esc(h.req)}</div>` : ''}${h.shield ? '<div class="chip sh">🛡 Дом под щитом</div>' : ''}
-    <div class="row"><button class="b1" id="cStory">📸 Картинка в сторис</button><button class="b2" id="cLink">🔗</button></div>`);
+    <div class="row"><button class="b1" id="cStory">📸 В сторис</button><button class="b3" id="cUp">⬆ Улучшить</button><button class="b2" id="cLink">🔗</button></div>`);
+  $('#cUp').onclick = () => openUpgrade(h);
   $('#cStory').onclick = () => makeStory(h);
   $('#cLink').onclick = () => shareLink(h);
 }
@@ -414,7 +411,7 @@ function toast(t) { const e = $('#toast'); e.textContent = t; e.classList.add('o
 function modal(html) { const m = $('#modal'); m.querySelector('.in').innerHTML = `<button class="x" aria-label="Закрыть">✕</button>` + html; m.classList.add('on'); m.querySelector('.x').onclick = closeModal; }
 function closeModal() { $('#modal').classList.remove('on'); }
 function openPlaces() {
-  const extra = [['🏛', 'Мэрия', 'центр города • мэр: ???', 'hall'], ['🔒', 'Секретная локация', 'откроется на 2500 подписчиков', 'secret'], ['🌋', 'Вулкан', 'следующая катастрофа', 'volcano']];
+  const extra = [['🏛', 'Мэрия', 'центр города • мэр: ???', 'hall'], ['🕌', 'Мечеть', 'победила в голосовании', 'mosque'], ['🔒', 'Секретная локация', 'откроется на 2500 подписчиков', 'secret'], ['🌋', 'Вулкан', 'следующая катастрофа', 'volcano']];
   modal(`<h2>✨ Места города</h2><p>Дома, которые подписчики заказали в комментариях.</p>
     ${extra.map(([e, a, b, k]) => `<button class="it" data-k="${k}"><span class="e">${e}</span><span class="t"><b>${a}</b><i>${b}</i></span><span class="go">→</span></button>`).join('')}
     <p style="margin-top:14px"><b>${houses.filter(h => h.feat).length}</b> домов построено по заказам из комментариев. Найди свой по нику!</p>
@@ -422,8 +419,15 @@ function openPlaces() {
   $('#modal').querySelectorAll('.it').forEach(b => b.onclick = () => {
     closeModal(); if (b.dataset.n) { const h = houses.find(x => x.nick === b.dataset.n); select(h); houseCard(h, false); return; }
     select(null); closeCard(); const k = b.dataset.k;
-    if (k === 'hall') { goHall(); hallCard(); } else if (k === 'secret') flyTo(SECRET.x, SECRET.z + 20, 120, 0); else flyTo(-120, -150, 260, 0.6);
+    if (k === 'hall') { goHall(); hallCard(); } else if (k === 'mosque') flyTo(MOSQ.x, MOSQ.z + 4, 55, 0.6); else if (k === 'secret') flyTo(SECRET.x, SECRET.z + 20, 120, 0); else flyTo(-120, -150, 260, 0.6);
   });
+}
+function openUpgrade(h) {
+  modal(`<h2>⬆ Улучшение дома</h2><p>Дом @${esc(h.nick)} можно прокачать до особняка. Уровни обновляются с каждым выпуском.</p>
+    <div class="step"><span>1</span><div><b>Дом</b><i>Подписка на @${IG} — твой дом уже стоит ✅</i></div></div>
+    <div class="step"><span>2</span><div><b>Усадьба: забор, сад, деревья</b><i>Напиши 3 комментария под последним выпуском</i></div></div>
+    <div class="step"><span>3</span><div><b>Особняк: бассейн и машина</b><i>Сделай репост выпуска в сторис с отметкой @${IG}</i></div></div>
+    <div class="row"><a class="b1" target="_blank" href="https://instagram.com/${IG}">Открыть @${IG}</a></div>`);
 }
 function hallCard() {
   sheet(`<div class="kick">🏛 Мэрия Города Домино</div><div class="nick">Мэр: ???</div>
@@ -432,7 +436,7 @@ function hallCard() {
 }
 function openVote() {
   const opts = ['🎢 Парк аттракционов', '🎬 Кинотеатр', '🌊 Аквапарк', '🦁 Зоопарк'];
-  modal(`<h2>🗳 Что строим дальше?</h2><p>Голосуем в комментариях под последним рилсом. Нажми на вариант — мы скопируем голос, останется вставить в комментарий.</p>
+  modal(`<h2>🗳 Что строим дальше?</h2><p>Прошлое голосование выиграла <b>мечеть</b> — она уже стоит на площади ✅<br>Голосуем в комментариях под последним рилсом. Нажми на вариант — мы скопируем голос, останется вставить в комментарий.</p>
     ${opts.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}`);
   $('#modal').querySelectorAll('.opt').forEach(b => b.onclick = () => { const txt = `Голосую: ${opts[b.dataset.i].replace(/^\S+\s/, '')} 🗳`; navigator.clipboard?.writeText(txt).catch(() => {}); b.textContent = '✓ Скопировано — вставь в комменты'; b.classList.add('ok'); setTimeout(() => window.open('https://instagram.com/' + IG, '_blank'), 800); });
 }
@@ -565,7 +569,7 @@ export async function boot() {
   const loop = (now) => {
     if (cam.fly) { const f = cam.fly; const k = clamp((now - f.t0) / f.dur); const e = k * k * (3 - 2 * k);
       cam.x = lerp(f.x0, f.x1, e); cam.z = lerp(f.z0, f.z1, e); cam.d = lerp(f.d0, f.d1, e) + Math.sin(Math.PI * e) * f.arc; cam.yaw = lerp(f.y0, f.y1, e); if (k >= 1) cam.fly = null; dirty = true; }
-    if (cam.idle) { cam.yaw += 0.0012; dirty = true; }
+    if (cam.idle) { if (cam.idleT0 == null) { cam.idleT0 = now; cam.idleY0 = cam.yaw; } cam.yaw = cam.idleY0 + 0.07 * (now - cam.idleT0) / 1000; dirty = true; } else cam.idleT0 = null;
     if (selected) { const s = (selected.big ? 1.8 : 1) * (1 + 0.07 * Math.sin(now / 170)); marker.scale.set(s, 1, s); dirty = true; }
     if (dirty) { applyCam(); renderer.render(scene, camera); updateLabels(); dirty = false; }
     requestAnimationFrame(loop);

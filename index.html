@@ -61,8 +61,8 @@ button,input,a{font-family:inherit}
 .txt{font-weight:600;font-size:14.5px;line-height:1.4;color:var(--ink2);margin-top:8px}
 .sug{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.sug button{border:0;background:#f1e9da;border-radius:12px;padding:8px 11px;font-weight:800;font-size:14px;color:var(--ink)}
 .row{display:flex;gap:8px;margin-top:14px}
-.row .b1,.row .b2{flex:1;text-align:center;text-decoration:none;border:0;border-radius:16px;font-weight:800;font-size:16px;padding:14px 10px}
-.b1{background:var(--coral);color:#fff}.b2{background:#f1e9da;color:var(--ink);flex:0 0 58px!important}
+.row .b1,.row .b2,.row .b3{flex:1;text-align:center;text-decoration:none;border:0;border-radius:16px;font-weight:800;font-size:16px;padding:14px 10px}
+.b1{background:var(--coral);color:#fff}.b3{background:var(--ink);color:#fff}.b2{background:#f1e9da;color:var(--ink);flex:0 0 58px!important}
 #modal .row .b2{flex:1!important}
 .x{position:absolute;right:12px;top:10px;width:34px;height:34px;border-radius:50%;border:0;background:#f1e9da;color:var(--ink);font-size:15px;font-weight:800}
 /* modal */
@@ -106,7 +106,7 @@ img.story{display:block;width:62%;max-width:300px;margin:0 auto;border-radius:18
 <body>
 <canvas id="c"></canvas><div id="labels"></div>
 <div id="hud">
-  <div class="brand"><div class="tile"><i></i><i></i><i></i></div><div><h1>ГОРОД ДОМИНО</h1><div class="sub"><b id="pop">1211</b> жителей · 1 подписчик = 1 дом</div></div></div>
+  <div class="brand"><div class="tile"><i></i><i></i><i></i></div><div><h1>ГОРОД ДОМИНО</h1><div class="sub"><b id="pop">2886</b> жителей · 1 подписчик = 1 дом</div></div></div>
   <div class="news"><span class="ic">📢</span><div class="tk"><div id="ticker"></div></div></div>
 </div>
 <div id="side"><button id="zin" aria-label="Приблизить">＋</button><button id="zout" aria-label="Отдалить">－</button><button id="rot" aria-label="Повернуть">⟳</button><button id="home" aria-label="К мэрии">⌂</button></div>
@@ -122,7 +122,7 @@ img.story{display:block;width:62%;max-width:300px;margin:0 auto;border-radius:18
   <h2>ГОРОД<br><em>ДОМИНО</em></h2>
   <div class="t2"><b>1 подписчик = 1 дом.</b> Твой уже стоит — найди его!</div>
   <div class="wsearch"><input id="wnick" placeholder="Твой ник в Instagram" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="wgo">Найти мой дом →</button></div>
-  <div class="wfoot"><button id="walk">Просто погулять по городу</button><div class="pop"><b id="pop2">1211</b><br>жителей</div></div>
+  <div class="wfoot"><button id="walk">Просто погулять по городу</button><div class="pop"><b id="pop2">2886</b><br>жителей</div></div>
   <div class="wsub">Ещё нет дома? <a href="https://instagram.com/domino.gorod" target="_blank">Подпишись на @domino.gorod</a></div>
 </div>
 <div id="loader"><div class="wtiles"><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div></div><div id="loadtxt">Строим город…</div></div>
