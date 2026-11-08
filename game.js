@@ -22,7 +22,7 @@ export function createGame(ctx) {
   const gBoom = new THREE.SphereGeometry(1, 14, 10);
 
   function mkUfo(boss) {
-    const g = new THREE.Group(); const s = boss ? 2.3 : 1.25; g.scale.setScalar(s);
+    const g = new THREE.Group(); const s = boss ? 3.4 : 2.2; g.scale.setScalar(s);
     g.add(new THREE.Mesh(gDisk, boss ? mBoss : mDisk)); const d = new THREE.Mesh(gDome, mDome); d.position.y = 0.45; g.add(d);
     for (let i = 0; i < 10; i++) { const l = new THREE.Mesh(gLight, mLight); const a = i / 10 * Math.PI * 2; l.position.set(Math.cos(a) * 2.6, 0, Math.sin(a) * 2.6); g.add(l); }
     const beam = new THREE.Mesh(gBeam, mBeam); beam.visible = false; g.add(beam); g.userData.beam = beam;
@@ -70,10 +70,10 @@ export function createGame(ctx) {
   function start() {
     buildUI(); document.body.classList.add('playing');
     const c = ctx.getCenter();
-    center = c ? { x: c.x, z: c.z } : { x: 0, z: 62 };
-    targets = houses.filter(h => Math.hypot(h.x - center.x, h.z - center.z) < 46);
-    if (targets.length < 10) targets = houses.slice().sort((a, b) => Math.hypot(a.x - center.x, a.z - center.z) - Math.hypot(b.x - center.x, b.z - center.z)).slice(0, 60);
-    flyTo(center.x, center.z - 4, 118, 0.3, 1.2);
+    center = c ? { x: c.x, z: c.z } : { x: -181, z: -117 };
+    // fixed high top-down camera over a residential district
+    cam.fly = null; cam.idle = false; cam.x = center.x; cam.z = center.z; cam.d = 200; cam.yaw = 0; ctx.markDirty();
+    targets = []; G.needTargets = true;
     st = { t0: performance.now() + 2600, last: performance.now(), score: 0, kills: 0, lives: LIVES, combo: 0, nextSpawn: 0, nextBoss: 20, shield: 1, over: false, el: 0 };
     G.on = true; renderHud();
     msg('3'); setTimeout(() => msg('2'), 800); setTimeout(() => msg('1'), 1600); setTimeout(() => msg('ЗАЩИЩАЙ!'), 2400); setTimeout(() => msg(''), 3300);
@@ -91,10 +91,10 @@ export function createGame(ctx) {
   function spawn(boss) {
     const free = targets.filter(h => !h._busy && !h._stolen); if (!free.length) return;
     const h = free[Math.floor(Math.random() * free.length)]; h._busy = true;
-    const a = Math.random() * Math.PI * 2, R = 75;
+    const a = Math.random() * Math.PI * 2, R = 45;
     const g = mkUfo(boss);
-    const hy = h.y + Math.min(h.h, 18) + (boss ? 16 : 11);
-    const u = { g, h, boss, hp: boss ? 4 : 1, phase: 'in', t: 0, sx: h.x + Math.cos(a) * R, sz: h.z + Math.sin(a) * R, sy: 48, hy, abd: boss ? 4.6 : clamp(3.4 - G.el() / 40, 2.1, 3.4), spin: Math.random() * 6 };
+    const hy = h.y + Math.min(h.h, 14) + (boss ? 20 : 14);
+    const u = { g, h, boss, hp: boss ? 4 : 1, phase: 'in', t: 0, sx: h.x + Math.cos(a) * R, sz: h.z + Math.sin(a) * R, sy: 40, hy, abd: boss ? 4.6 : clamp(3.4 - G.el() / 40, 2.1, 3.4), spin: Math.random() * 6 };
     g.position.set(u.sx, u.sy, u.sz); ufos.push(u); beep(300, 600, 0.25, 'sine', 0.03);
   }
   G.el = () => st.el;
@@ -133,7 +133,7 @@ export function createGame(ctx) {
       if (u.phase !== 'in' && u.phase !== 'beam') continue;
       const p = u.g.position, q = proj(p.x, p.y, p.z); if (!q.ok) continue;
       const r = 3 * u.g.scale.x; const e = proj(p.x + right.x * r, p.y + right.y * r, p.z + right.z * r);
-      const rp = Math.max(30, Math.hypot(e.x - q.x, e.y - q.y) * 1.35 + 14); const d = Math.hypot(q.x - sx, q.y - sy);
+      const rp = Math.max(46, Math.hypot(e.x - q.x, e.y - q.y) * 1.3 + 16); const d = Math.hypot(q.x - sx, q.y - sy);
       if (d < rp && d / rp < bd) { bd = d / rp; best = { u, q }; }
     }
     if (best) {
@@ -145,6 +145,11 @@ export function createGame(ctx) {
 
   G.update = function (now) {
     if (!st) return;
+    if (G.needTargets && now > st.t0 - 2000) {   // houses actually visible on screen (away from the HUD and the shield button)
+      G.needTargets = false;
+      targets = houses.filter(h => { const q = proj(h.x, h.y + 4, h.z); return q.ok && q.x > 50 && q.x < innerWidth - 50 && q.y > 150 && q.y < innerHeight - 170; });
+      if (targets.length < 8) targets = houses.slice().sort((a, b) => Math.hypot(a.x - center.x, a.z - center.z) - Math.hypot(b.x - center.x, b.z - center.z)).slice(0, 40);
+    }
     const dt = Math.min(0.05, (now - st.last) / 1000); st.last = now;
     if (now >= st.t0 && !st.over) st.el += dt;
     const el = st.el;
