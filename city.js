@@ -8,8 +8,9 @@ import './extra.js';
 import './extra2.js';
 import './extra3.js';
 import './extra4.js';
+import './extra5.js';
 
-const IG = 'domino.gorod', POP = 6137, SITE = 'gorod-domeno.vercel.app';
+const IG = 'domino.gorod', POP = 10849, SITE = 'gorod-domeno.vercel.app';
 const $ = (s) => document.querySelector(s);
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 const lerp = (a, b, k) => a + (b - a) * k;
@@ -19,20 +20,24 @@ const norm = (s) => (s || '').toLowerCase().trim().replace(/^https?:\/\/(www\.)?
 function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const rnd = mulberry(20261106);
 
-const EMO = { capybara: '🦫', shark: '🦈', watermelon: '🍉', pizza: '🍕', pelmen: '🥟', cheburek: '🥟', ferris: '🎡', burj: '🏙', pinkcastle: '🏰', kremlin: '🏯', stadium: '⚽', school: '🏫', pumpkin: '🎃', dog: '🐶', hotdog: '🌭', burger: '🍔', mosque: '🕌', rocket: '🚀', moonrocket: '🌙', f1: '🏎', tv: '📺', pineapple: '🍍', banana: '🍌', cucumber: '🥒', diamond: '💎', chocolate: '🍫', cake: '🧁', bigcastle: '🏰', court: '🏀', jurassic: '🦖', ballet: '🩰', hotel: '🏨', bunker: '🛡', catroof: '🐱', pillow: '🛏', kirik: '🧖', theater: '🎭', dance: '💃', royal: '👑', purple: '💜', blue: '💙', star: '⭐', bunkerhouse: '🛡', best: '🏆', villa: '🏝', yurt: '⛺', apple: '🍎', orange: '🍊', tank: '🪖', donut: '🍩', khinkali: '🥟', flyhouse: '🎈', chips: '🥔', crownhouse: '👑', guitar: '🎸', mug: '☕', ufo: '🛸', billion: '🏢', xmas: '🎄', castle: '🏰', mansion: '🏡', carhouse: '🚗', bunker: '🛡', poolhouse: '🏊', poolmansion: '🏊', tower: '🏢', apart: '🏢', two: '🏠', court: '🏀', restaurant: '🍽', mall: '🛍', hut: '🌳', farm: '🐄', xmas: '🎄', aquapark: '🌊', pinkheart: '💖', rock: '🪨', kennel: '🐶', flyrocket: '🚀', bear: '🧸', hospital: '🏥', smile: '😊', plane: '✈️', globe: '🌍', titan: '🛡', tuva: '🏳️', armenian: '🇦🇲', icecream: '🍦', mushroom: '🍄', strawberry: '🍓', eiffel: '🗼', cactus: '🌵', pyramid: '🔺', carsmansion: '🏎', kirik: '🧖' };
+const EMO = { airfryer: '🍟', palace: '👑', ship: '🚢', flower: '🌸', fridge: '🧊', upside: '🙃', capybara: '🦫', shark: '🦈', watermelon: '🍉', pizza: '🍕', pelmen: '🥟', cheburek: '🥟', ferris: '🎡', burj: '🏙', pinkcastle: '🏰', kremlin: '🏯', stadium: '⚽', school: '🏫', pumpkin: '🎃', dog: '🐶', hotdog: '🌭', burger: '🍔', mosque: '🕌', rocket: '🚀', moonrocket: '🌙', f1: '🏎', tv: '📺', pineapple: '🍍', banana: '🍌', cucumber: '🥒', diamond: '💎', chocolate: '🍫', cake: '🧁', bigcastle: '🏰', court: '🏀', jurassic: '🦖', ballet: '🩰', hotel: '🏨', bunker: '🛡', catroof: '🐱', pillow: '🛏', kirik: '🧖', theater: '🎭', dance: '💃', royal: '👑', purple: '💜', blue: '💙', star: '⭐', bunkerhouse: '🛡', best: '🏆', villa: '🏝', yurt: '⛺', apple: '🍎', orange: '🍊', tank: '🪖', donut: '🍩', khinkali: '🥟', flyhouse: '🎈', chips: '🥔', crownhouse: '👑', guitar: '🎸', mug: '☕', ufo: '🛸', billion: '🏢', xmas: '🎄', castle: '🏰', mansion: '🏡', carhouse: '🚗', bunker: '🛡', poolhouse: '🏊', poolmansion: '🏊', tower: '🏢', apart: '🏢', two: '🏠', court: '🏀', restaurant: '🍽', mall: '🛍', hut: '🌳', farm: '🐄', xmas: '🎄', aquapark: '🌊', pinkheart: '💖', rock: '🪨', kennel: '🐶', flyrocket: '🚀', bear: '🧸', hospital: '🏥', smile: '😊', plane: '✈️', globe: '🌍', titan: '🛡', tuva: '🏳️', armenian: '🇦🇲', icecream: '🍦', mushroom: '🍄', strawberry: '🍓', eiffel: '🗼', cactus: '🌵', pyramid: '🔺', carsmansion: '🏎', kirik: '🧖' };
 const emo = (t) => EMO[String(t).split(':')[0]] || '🏠';
-const STREETS = ['Подписчиков', 'Лайков', 'Репостов', 'Капибарная', 'Чебуречная', 'Арбузная', 'Сторис', 'Рилсов', 'Пельменная', 'Комментариев', 'Солнечная', 'Хештегов', 'Дружбы', 'Весёлая', 'Мечтателей', 'Звёздная', 'Мэрская', 'Площадная', 'Юртовая', 'Замковая', 'Особняковая', 'Ракетная', 'Речная', 'Мостовая', 'Набережная', 'Садовая', 'Ёлочная', 'Морская', 'Пирсовая', 'Аэропортовая', 'Рыночная', 'Торговая', 'Деловая', 'Выборная', 'Тарелочная', 'Защитников'];
+const STREETS = ['Подписчиков', 'Лайков', 'Репостов', 'Капибарная', 'Чебуречная', 'Арбузная', 'Сторис', 'Рилсов', 'Пельменная', 'Комментариев', 'Солнечная', 'Хештегов', 'Дружбы', 'Весёлая', 'Мечтателей', 'Звёздная', 'Мэрская', 'Площадная', 'Юртовая', 'Замковая', 'Особняковая', 'Ракетная', 'Речная', 'Мостовая', 'Набережная', 'Садовая', 'Ёлочная', 'Морская', 'Пирсовая', 'Аэропортовая', 'Рыночная', 'Торговая', 'Деловая', 'Выборная', 'Тарелочная', 'Защитников', 'Новосёлов', 'Пирсовая', 'Морская', 'Десятитысячная', 'Мегаполисная', 'Корабельная', 'Цветочная', 'Холодильная'];
 const NEWS = [
+  '👑 За городом построили ДВОРЕЦ @artem_hat — размером как 30 домов',
+  '🧟 Новая игра: на город идут ЗОМБИ — жми «Играть» и отбивайся!',
+  '🍟 @angelinkka9 получила дом-аэрогриль, как просила',
   '🗳 Идут выборы мэра! Мэром станет тот, у кого больше всех комментариев',
-  '🛸 НЛО атакуют город — жми «Играть» и отбивайся от пришельцев',
-  '🎄 Рядом с мэрией выросла огромная ёлка — игрушки начнём вешать позже',
+    '🎄 Рядом с мэрией выросла огромная ёлка — игрушки начнём вешать позже',
   '🛍 Открылся торговый квартал: рынок, два ТЦ и места под бизнесы',
   '🏪 Есть бизнес? Подпишись и напиши название в комментах — повесим вывеску',
-  '🌊 У города появился океан. Пирс откроется на 10 000 подписчиков',
-  '🏙 Мегаполис с квартирами начнёт строиться на 10 000 подписчиков',
+  '🎉 НАС 10 000! В городе 10 849 жителей — +4 980 новых домов',
+  '🌊 Пирс ОТКРЫТ! Гуляй до самого маяка и кафе на краю',
+  '🏗 В Мегаполисе началась стройка — первые высотки уже растут',
+  '🚢 Новые заказы: дома-корабли, дома-цветы, холодильник и перевёрнутый дом',
   '✈️ Аэропорт откроется на 15 000 — добавятся новые города',
   '🌉 Через реку построили мосты, город разбит на районы',
-  '🏡 В городе уже 6137 жителей — найди свой дом по нику',
+  '🏡 В городе уже 10 849 жителей — найди свой дом по нику',
   '🕌 Мечеть и ⛪ православный храм переехали в свои кварталы — с подъездом и парковкой',
   '🌋 Вулкан на горизонте не спит…',
 ];
@@ -41,7 +46,7 @@ const NEWS = [
 const LOT = 6.4, NCX = 4, NCZ = 2, SW = 1.8, ROAD = 7;
 const BW = NCX * LOT, BD = NCZ * LOT;
 const PX = BW + 2 * SW + ROAD, PZ = BD + 2 * SW + ROAD;
-const NB = 15;
+const NB = 20;
 const isPlaza = (bx, bz) => Math.abs(bx) <= 1 && Math.abs(bz) <= 1;
 const RIVER_BZ = 7; const isRiver = (bz) => bz === RIVER_BZ;
 const isCom = (bx, bz) => bx >= 2 && bx <= 4 && Math.abs(bz) <= 1;
@@ -52,6 +57,7 @@ const CX = (NB + 0.5) * PX, CZ = (NB + 0.5) * PZ;      // centre lines of outer 
 const PLAZA_W = 3 * PX - ROAD, PLAZA_D = 3 * PZ - ROAD;
 const MOSQ = { x: -96, z: 0 }, CHUR = { x: -14, z: 70.2 }, HALL = { x: 0, z: -13 }, SECRET = { x: 0, z: -CZ - 58 }, VOLC = { x: -470, z: -700 };
 const TREE = { x: 35, z: 0 };
+const PAL = { nick: 'artem_hat', x: 11.5 * ((NCX * LOT) + 2 * SW + ROAD), gz: 0 };   // palace on its own road north-east of the city
 const RZ = RIVER_BZ * PZ, RW = BD + 2 * SW;                       // river centre z / width
 const COM = { x0: 2 * PX - BW / 2 - SW, x1: 4 * PX + BW / 2 + SW, z0: -PZ - BD / 2 - SW, z1: PZ + BD / 2 + SW };
 const MOSQ_SB = { x0: -4 * PX - BW / 2 - SW, x1: -2 * PX + BW / 2 + SW, z0: -PZ - BD / 2 - SW, z1: PZ + BD / 2 + SW };
@@ -59,6 +65,7 @@ const CHUR_SB = { x0: -PX - BW / 2 - SW, x1: PX + BW / 2 + SW, z0: 2 * PZ - BD /
 const MEGA = { x0: -CX - 255, x1: -CX - 28, z0: -250, z1: 135 };
 const AIR = { x0: CX + 28, x1: CX + 330, z0: -265, z1: 135 };
 const OCEAN_Z = CZ + 44;
+PAL.gz = -CZ - 48; PAL.z = -CZ - 150;   // gate z, main building z
 const ZONES = [];   // tappable areas: {x0,x1,z0,z1,fn}
 const SHOPS = [];
 
@@ -221,6 +228,7 @@ function buildOutskirts() {
     const x = (rnd() - 0.5) * 2 * (CX + 360), z = (rnd() - 0.5) * 2 * (CZ + 170);
     if (Math.abs(x) < CX + 8 && Math.abs(z) < CZ + 8) continue;
     if (Math.abs(x - SECRET.x) < 70 && Math.abs(z - SECRET.z) < 46) continue;
+    if (Math.abs(x - PAL.x) < 100 && z < -CZ + 10 && z > PAL.z - 90) continue;
     if (z > CZ - 20) continue;                                                     // ocean side
     if (x < MEGA.x1 + 10 && x > MEGA.x0 - 10 && z > MEGA.z0 - 10 && z < RZ + 30) continue;
     if (x > AIR.x0 - 10 && x < AIR.x1 + 10 && z > AIR.z0 - 10 && z < RZ + 30) continue;
@@ -419,27 +427,35 @@ function buildOcean(g) {
   for (let x = -CX; x <= CX; x += 21) { if (Math.abs(x) < 10) continue; palm(x + rnd() * 6, CZ + 13 + rnd() * 3); }
   const UC = ['#ff5a3c', '#ffc23d', '#2f80ed', '#19b38a', '#e84a7f'];
   for (let i = 0; i < 34; i++) { const x = (rnd() - 0.5) * 2 * (CX - 20), z = CZ + 22 + rnd() * 14; if (Math.abs(x) < 14) continue; cyl(g, 0.06, 0.06, 2.6, '#ffffff', x, 0, z, 5); cone(g, 1.8, 0.8, UC[i % 5], x, 2.3, z, 8); box(g, 0.9, 0.25, 2.2, '#ffffff', x + 1.3, 0.1, z + 0.4); }
-  // pier — under construction
+  // pier — OPEN (10 000)
   const P = new THREE.Group(); P.position.set(0, 0, 0); g.add(P);
   const z0 = OCEAN_Z - 14, zb = OCEAN_Z + 55, ze = OCEAN_Z + 130;
   box(P, 10, 0.45, zb - z0, '#b07d4f', 0, 1.0, (z0 + zb) / 2);
   for (let z = z0 + 6; z <= zb; z += 6) for (const s of [-1, 1]) { cyl(P, 0.32, 0.32, 1.4, '#7a5638', s * 4.4, -0.2, z, 6); box(P, 0.12, 1.1, 0.12, '#ffffff', s * 4.9, 1.45, z); }
   for (const s of [-1, 1]) box(P, 0.12, 0.12, zb - z0, '#ffffff', s * 4.9, 2.5, (z0 + zb) / 2);
-  for (let z = zb + 6; z <= ze; z += 6) for (const s of [-1, 1]) cyl(P, 0.32, 0.32, 2.4, '#8a6a4a', s * 4.4, -0.2, z, 6);
-  for (let z = zb; z <= zb + 30; z += 12) box(P, 10, 0.3, 0.6, '#9a7350', 0, 1.6, z);
-  for (let i = 0; i < 6; i++) box(P, 1.6, 1.0, 0.25, i % 2 ? '#ffffff' : '#e5383b', -4 + i * 1.6, 1.45, zb + 0.4);
-  plate(P, signTex([['ПИРС ЗАКРЫТ', 60, '#16223a'], ['откроется на 10 000', 40, '#16223a', 'M']], { bg: '#ffc23d', w: 512, h: 170, border: '#16223a' }), 5.2, 1.7, 0, 3.6, zb + 0.3, Math.PI, true);
-  // crane barge
-  const B = new THREE.Group(); B.position.set(12, 0, OCEAN_Z + 92); g.add(B);
-  box(B, 12, 1.4, 18, '#56607a', 0, -0.4, 0); box(B, 1.2, 16, 1.2, '#ffc23d', -3, 1, -4); const jib = box(B, 1, 1, 22, '#ffc23d', -3, 16.5, 4); jib.rotation.x = -0.25; box(B, 3, 2.4, 3, '#ffffff', -3, 1, -6.5);
-  // beach billboard
-  billboard(g, signTex([['🌊 ПИРС', 70, '#ffffff'], ['откроется на 10 000 подписчиков', 34, '#ffc23d', 'M']], { bg: '#2f80ed', w: 768, h: 210 }), 14, 3.8, 0, CZ + 18, Math.PI, 3.5);
+  box(P, 10, 0.45, ze - zb, '#b07d4f', 0, 1.0, (zb + ze) / 2);
+  for (let z = zb + 6; z <= ze; z += 6) for (const s of [-1, 1]) { cyl(P, 0.32, 0.32, 1.4, '#7a5638', s * 4.4, -0.2, z, 6); box(P, 0.12, 1.1, 0.12, '#ffffff', s * 4.9, 1.45, z); }
+  for (const s of [-1, 1]) box(P, 0.12, 0.12, ze - zb, '#ffffff', s * 4.9, 2.5, (zb + ze) / 2);
+  // end platform: café, lanterns, benches, flags
+  box(P, 26, 0.45, 20, '#b07d4f', 0, 1.0, ze + 9);
+  for (const [px, pz] of [[-12.5, ze], [12.5, ze], [-12.5, ze + 18.5], [12.5, ze + 18.5]]) cyl(P, 0.4, 0.4, 1.6, '#7a5638', px, -0.4, pz, 6);
+  box(P, 9, 3.6, 6, '#f6eedd', -6, 1.45, ze + 12); box(P, 9.6, 0.5, 6.6, '#2f80ed', -6, 5.05, ze + 12);
+  const aw = box(P, 9.4, 0.12, 2, '#ffffff', -6, 4.0, ze + 8.4); aw.rotation.x = -0.25;
+  plate(P, signTex([['КАФЕ «ПИРС»', 56, '#ffffff']], { bg: '#2f80ed', w: 512, h: 110 }), 6, 1.2, -6, 4.4, ze + 8.95, Math.PI, true);
+  for (let i = 0; i < 3; i++) { cyl(P, 0.9, 0.9, 0.12, '#ffffff', 5 + i * 3, 2.3, ze + 6 + (i % 2) * 5, 10); cyl(P, 0.08, 0.08, 1, '#555b66', 5 + i * 3, 1.3, ze + 6 + (i % 2) * 5, 5); cyl(P, 0.06, 0.06, 2.8, '#ffffff', 5 + i * 3, 2.4, ze + 6 + (i % 2) * 5, 5); cone(P, 1.7, 0.7, ['#ff5a3c', '#ffc23d', '#19b38a'][i], 5 + i * 3, 5.1, ze + 6 + (i % 2) * 5, 8); }
+  for (let z = z0 + 10; z <= ze; z += 18) for (const s of [-1, 1]) { cyl(P, 0.1, 0.1, 4.2, '#2f3645', s * 4.4, 1.45, z, 6); sph(P, 0.45, null, s * 4.4, 5.8, z, M('#fff2c2', { emissive: '#ffd77a', emissiveIntensity: 1 })); }
+  for (let z = z0 + 19; z <= ze; z += 18) for (const s of [-1, 1]) { box(P, 0.9, 0.5, 2.6, '#8a5a3a', s * 3.3, 1.45, z); box(P, 0.15, 0.7, 2.6, '#8a5a3a', s * 3.75, 1.95, z); }
+  for (let i = 0; i < 7; i++) { cyl(P, 0.07, 0.07, 6, '#ffffff', -12 + i * 4, 1.45, ze + 18.4, 5); box(P, 0.05, 1.1, 1.7, ['#e5383b', '#ffc23d', '#2f80ed', '#19b38a'][i % 4], -12 + i * 4, 6.2, ze + 18.4 + 0.9); }
+  plate(P, signTex([['ПИРС ОТКРЫТ', 64, '#ffffff'], ['нас 10 000 — спасибо!', 38, '#ffc23d', 'M']], { bg: '#19b38a', w: 512, h: 170, border: '#ffffff' }), 6.2, 2.0, 0, 4.3, z0 + 1, Math.PI, true);
+  box(P, 0.3, 4.4, 0.3, '#ffffff', -3.2, 1.45, z0 + 1); box(P, 0.3, 4.4, 0.3, '#ffffff', 3.2, 1.45, z0 + 1);
+  billboard(g, signTex([['🌊 ПИРС ОТКРЫТ', 70, '#ffffff'], ['нас 10 000 — гуляй до края!', 34, '#ffc23d', 'M']], { bg: '#19b38a', w: 768, h: 210 }), 14, 3.8, 0, CZ + 18, Math.PI, 3.5);
   // lighthouse
   const LH = new THREE.Group(); LH.position.set(-190, 0, OCEAN_Z + 70); g.add(LH);
   cyl(LH, 9, 11, 2, '#9c9586', 0, -0.5, 0, 12); for (let i = 0; i < 5; i++) cyl(LH, 2.6 - i * 0.2, 2.8 - i * 0.2, 4, i % 2 ? '#ffffff' : '#e5383b', 0, 1.5 + i * 4, 0, 14);
   cyl(LH, 1.6, 1.6, 2.2, null, 0, 21.5, 0, 12, M('#fff2c2', { emissive: '#ffd77a', emissiveIntensity: 1 })); cone(LH, 2.4, 2.2, '#16223a', 0, 23.7, 0, 12);
+  for (const [bx2, bz2] of [[-9.5, OCEAN_Z + 70], [9.5, OCEAN_Z + 95], [-9.5, OCEAN_Z + 118]]) { const y = new THREE.Group(); y.position.set(bx2, 0.05, bz2); g.add(y); box(y, 3, 1.2, 9, '#ffffff'); box(y, 2.2, 1.1, 3.4, '#e5383b', 0, 1.2, -0.5); cyl(y, 0.08, 0.08, 9, '#ffffff', 0, 1.2, 1.2, 5); }
   for (let i = 0; i < 4; i++) { const y = new THREE.Group(); y.position.set(-300 + i * 190 + rnd() * 40, 0.05, OCEAN_Z + 60 + rnd() * 120); y.rotation.y = rnd() * 6; g.add(y); box(y, 3, 1.2, 9, '#ffffff'); box(y, 2.2, 1.1, 3.4, '#2f80ed', 0, 1.2, -0.5); cyl(y, 0.08, 0.08, 9, '#ffffff', 0, 1.2, 1.2, 5); }
-  POIS.push({ key: 'pier', x: 0, y: 16, z: OCEAN_Z + 40, html: '🌊 ОКЕАН И ПИРС<i>пирс откроется на 10 000</i>' });
+  POIS.push({ key: 'pier', x: 0, y: 16, z: OCEAN_Z + 40, html: '🌊 ПИРС ОТКРЫТ<i>нас 10 000 — гуляй!</i>' });
   ZONES.push({ key: 'pier', x: 0, y: 2, z: OCEAN_Z + 45, r: 40, fn: pierCard });
 }
 
@@ -461,6 +477,9 @@ function buildMegapolis(g) {
     const h = 36 + centr * 70 + rnd() * 26, w = 18 + (n++ % 3) * 2;
     box(g, w + 4, 0.6, w + 4, '#a9a59c', x, 0.03, z);
     for (const [px, pz] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) box(g, 0.25, 2.4, 0.25, '#7a5a3a', x + px * w / 2, 0.6, z + pz * w / 2);
+    { const built = Math.max(0, Math.min(h, h * (0.12 + rnd() * 0.5) * (n % 4 === 1 ? 0 : 1))), fl = 4.2; const nf = Math.floor(built / fl);
+      for (let f = 0; f < nf; f++) { box(g, w, 0.5, w, '#b9b4aa', x, 0.6 + f * fl + fl - 0.5, z); for (const [px, pz] of [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, -1], [0, 1], [-1, 0], [1, 0]]) box(g, 0.7, fl - 0.5, 0.7, '#a9a59c', x + px * (w / 2 - 0.4), 0.6 + f * fl, z + pz * (w / 2 - 0.4)); if (f < nf - 2) { for (const s of [-1, 1]) { box(g, w - 1.4, fl - 1.4, 0.15, '#7fa6c4', x, 0.6 + f * fl + 0.4, z + s * (w / 2 - 0.4)); box(g, 0.15, fl - 1.4, w - 1.4, '#7fa6c4', x + s * (w / 2 - 0.4), 0.6 + f * fl + 0.4, z); } } }
+      if (nf) { box(g, 2.2, 2.6, 2.2, '#ffc23d', x + w / 4, 0.6 + nf * fl, z - w / 4); for (const s of [-1, 1]) box(g, w + 1.6, 0.12, 0.12, '#e5383b', x, 0.6 + nf * fl + 1, z + s * (w / 2 + 0.6)); } }
     const t = ghostTex.clone(); t.needsUpdate = true; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(w / 4, h / 3.6);
     const gm = new THREE.Mesh(new THREE.BoxGeometry(w, h, w).translate(0, h / 2, 0), new THREE.MeshBasicMaterial({ map: t, transparent: true, opacity: 0.55, depthWrite: false, side: THREE.DoubleSide }));
     gm.position.set(x, 0.6, z); scene.add(gm);
@@ -474,8 +493,8 @@ function buildMegapolis(g) {
     box(top, 1.4, 1.4, 46, '#ffc23d', 0, 0, 14); box(top, 1.4, 1.4, 14, '#ffc23d', 0, 0, -10); box(top, 3, 3, 4, '#3a3f4b', 0, -0.2, -14); box(top, 2.4, 2.4, 2.4, '#ffffff', 0, -2.4, 1.6);
     box(top, 0.1, 30, 0.1, '#2f3645', 0, -30, 30); box(top, 1.6, 0.6, 1.6, '#2f3645', 0, -30.6, 30);
   }
-  billboard(g, signTex([['МЕГАПОЛИС', 92, '#ffffff'], ['высотки с квартирами для подписчиков', 34, '#7fd3ff', 'M'], ['стройка начнётся на 10 000 подписчиков', 38, '#ffc23d', 'M']], { bg: '#16223a', w: 1024, h: 320 }), 34, 10.6, x1 - 8, -36, Math.PI / 2, 5);
-  POIS.push({ key: 'mega', x: cx, y: 125, z: cz, html: '🏙 МЕГАПОЛИС<i>стройка начнётся на 10 000</i>' });
+  billboard(g, signTex([['МЕГАПОЛИС', 92, '#ffffff'], ['высотки с квартирами для подписчиков', 34, '#7fd3ff', 'M'], ['🏗 СТРОЙКА ИДЁТ · нас 10 000!', 38, '#ffc23d', 'M']], { bg: '#16223a', w: 1024, h: 320 }), 34, 10.6, x1 - 8, -36, Math.PI / 2, 5);
+  POIS.push({ key: 'mega', x: cx, y: 125, z: cz, html: '🏗 МЕГАПОЛИС<i>стройка началась!</i>' });
   ZONES.push({ key: 'mega', x: cx, y: 30, z: cz, r: 110, fn: megaCard });
 }
 
@@ -700,9 +719,90 @@ function placeResidents(res) {
     if (p) { p[0].used = p[1].used = true; put(r, (p[0].x + p[1].x) / 2, p[0].z, p[0].row, true, p[0]); }
     else { const l = takeSingle(); if (!l) break; l.used = true; put(r, l.x, l.z, l.row, false, l); }
   }
+  buildPalace();
   const free = lots;
   // leftover lots → mini parks
   for (const l of free) if (!l.used) { addTree(l.x - 1.3, l.z, 1); addTree(l.x + 1.4, l.z + 1, 0.9); }
+}
+
+
+// ---------------- palace of @artem_hat (outside the city, own road) ----------------
+function buildPalace() {
+  const g = new THREE.Group(); scene.add(g);
+  const X = PAL.x, Z = PAL.z, GZ = PAL.gz, W = 170, z0 = GZ, z1 = Z - 75;
+  const CREAM = '#f3e6c8', CREAM2 = '#e9d6ae', GOLD = M('#f2c14e', { emissive: '#c8901a', emissiveIntensity: 0.35 }), ROOF = '#3b6fb6', WN = () => M('#ffe6a0', { emissive: '#ffc85a', emissiveIntensity: 0.8 });
+  // road from the city to the gate + sign at the turn
+  const road = new THREE.Mesh(new THREE.PlaneGeometry(9, -CZ + 3.5 - GZ).rotateX(-Math.PI / 2), M('#6b7080')); road.position.set(X, 0.045, (-CZ + 3.5 + GZ) / 2); g.add(road);
+  for (let z = -CZ - 6; z > GZ + 4; z -= 7) box(g, 0.25, 0.02, 2.4, '#ffffff', X, 0.04, z);
+  for (let z = -CZ - 10; z > GZ + 8; z -= 14) for (const s of [-1, 1]) { cyl(g, 0.12, 0.12, 5, '#2f3645', X + s * 5.5, 0, z, 6); sph(g, 0.5, null, X + s * 5.5, 5.2, z, WN()); }
+  billboard(g, signTex([['👑 ДВОРЕЦ', 80, '#f2c14e'], ['@artem_hat', 50, '#ffffff', 'M'], ['↑ по этой дороге', 30, '#9fb3d9', 'M']], { bg: '#16223a', w: 768, h: 300, border: '#f2c14e' }), 16, 6.2, X + 14, -CZ - 14, Math.PI / 2 * 0, 3.5);
+  // grounds
+  const lawn = new THREE.Mesh(new THREE.PlaneGeometry(W, z0 - z1).rotateX(-Math.PI / 2), M('#8fc466')); lawn.position.set(X, 0.03, (z0 + z1) / 2); g.add(lawn);
+  // fence with golden spikes + gate
+  for (let x = X - W / 2; x <= X + W / 2; x += 4) for (const z of [z0, z1]) { if (z === z0 && Math.abs(x - X) < 8) continue; box(g, 0.3, 3.2, 0.3, '#2b2f3a', x, 0, z); cone(g, 0.3, 0.7, null, x, 3.2, z, 6, GOLD); }
+  for (let z = z1; z <= z0; z += 4) for (const x of [X - W / 2, X + W / 2]) { box(g, 0.3, 3.2, 0.3, '#2b2f3a', x, 0, z); cone(g, 0.3, 0.7, null, x, 3.2, z, 6, GOLD); }
+  for (const [w, d, x, z] of [[W, 0.2, X, z0], [W, 0.2, X, z1], [0.2, z0 - z1, X - W / 2, (z0 + z1) / 2], [0.2, z0 - z1, X + W / 2, (z0 + z1) / 2]]) { box(g, w, 0.25, d, '#2b2f3a', x, 2.6, z); box(g, w, 0.25, d, '#2b2f3a', x, 0.6, z); }
+  for (const s of [-1, 1]) { box(g, 2.6, 9, 2.6, CREAM2, X + s * 8, 0, z0); sph(g, 1.3, null, X + s * 8, 10, z0, GOLD); }
+  box(g, 18.6, 1.6, 1.2, CREAM2, X, 9, z0); plate(g, signTex([['ДВОРЕЦ', 52, '#f2c14e'], ['@artem_hat', 34, '#ffffff', 'M']], { bg: '#16223a', w: 512, h: 150, border: '#f2c14e' }), 9, 2.6, X, 12.3, z0 + 0.2, 0, true);
+  // avenue: red carpet, tree rows, fountain
+  const av = new THREE.Mesh(new THREE.PlaneGeometry(12, z0 - (Z + 24)).rotateX(-Math.PI / 2), M('#e3d6bd')); av.position.set(X, 0.05, (z0 + Z + 24) / 2); g.add(av);
+  const cp = new THREE.Mesh(new THREE.PlaneGeometry(3.4, z0 - (Z + 22)).rotateX(-Math.PI / 2), M('#c0262d')); cp.position.set(X, 0.07, (z0 + Z + 22) / 2); g.add(cp);
+  for (let z = z0 - 8; z > Z + 30; z -= 8) for (const s of [-1, 1]) { addTree(X + s * 9, z, 1.1); }
+  const FZ = (z0 + Z + 24) / 2 - 4;
+  cyl(g, 13, 13.5, 1.2, '#d9d2c3', X, 0, FZ, 32); cyl(g, 12, 12, 0.2, null, X, 1.05, FZ, 32, M('#5cc3e6', { emissive: '#2a8cb8', emissiveIntensity: 0.3 }));
+  cyl(g, 2.2, 3, 3, '#d9d2c3', X, 1, FZ, 16); cyl(g, 3.6, 3.6, 0.5, '#d9d2c3', X, 4, FZ, 16); cyl(g, 0.6, 0.8, 4, '#d9d2c3', X, 4.5, FZ, 10); sph(g, 1.2, null, X, 9, FZ, GOLD);
+  for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2; cyl(g, 0.15, 0.3, 3.2, null, X + Math.cos(a) * 6, 1.2, FZ + Math.sin(a) * 6, 6, M('#bfe9ff', { transparent: true, opacity: 0.7 })); }
+  // parterre gardens with hedges + flowers, pool, helipad, garage cars
+  for (const s of [-1, 1]) {
+    const cx = X + s * 45, cz = FZ;
+    for (let i = 0; i < 4; i++) { box(g, 34 - i * 8, 1, 0.9, '#3f8a3a', cx, 0, cz - 13 + i * 2); box(g, 34 - i * 8, 1, 0.9, '#3f8a3a', cx, 0, cz + 13 - i * 2); box(g, 0.9, 1, 26 - i * 4, '#3f8a3a', cx - 17 + i * 4, 0, cz); box(g, 0.9, 1, 26 - i * 4, '#3f8a3a', cx + 17 - i * 4, 0, cz); }
+    for (let i = 0; i < 30; i++) sph(g, 0.6, ['#e84a7f', '#ffc23d', '#ff5a3c', '#ffffff'][i % 4], cx + (rnd() - 0.5) * 20, 0.7, cz + (rnd() - 0.5) * 14, undefined, 6, 4);
+    cone(g, 1.8, 6, '#2f7a34', cx, 0, cz, 8);
+  }
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(30, 12).rotateX(-Math.PI / 2), M('#4fc1ea', { emissive: '#2a8cb8', emissiveIntensity: 0.35 })); pool.position.set(X - 50, 0.09, Z - 52); g.add(pool);
+  box(g, 32, 0.15, 14, '#efe8d8', X - 50, 0.02, Z - 52);
+  const hp = new THREE.Mesh(new THREE.CircleGeometry(11, 24).rotateX(-Math.PI / 2), M('#4a4f5c')); hp.position.set(X + 55, 0.07, Z - 50); g.add(hp);
+  plate(g, signTex([['H', 120, '#ffffff']], { bg: '#4a4f5c', w: 256, h: 256, r: 128 }), 10, 10, X + 55, 0.12, Z - 50).rotation.x = -Math.PI / 2;
+  { const H = new THREE.Group(); H.position.set(X + 55, 0.1, Z - 50); H.rotation.y = 0.6; g.add(H); const b = sph(H, 2.4, '#16223a', 0, 2.6, 0, undefined, 14, 10); b.scale.set(1, 0.85, 1.5); box(H, 0.6, 0.6, 7, '#16223a', 0, 2.6, -5.5); box(H, 0.2, 2.2, 1.6, '#f2c14e', 0, 2.6, -8.6); box(H, 14, 0.1, 0.7, '#2b2f3a', 0, 5, 0); box(H, 0.7, 0.1, 14, '#2b2f3a', 0, 5.02, 0); for (const s of [-1, 1]) box(H, 0.25, 0.25, 5, '#2b2f3a', s * 1.6, 0, 0); }
+  for (let i = 0; i < 4; i++) { const c = new THREE.Group(); c.position.set(X + 28 + i * 6, 0.1, z0 - 14); g.add(c); box(c, 2.6, 1.1, 5, ['#16223a', '#f4f4f4', '#c0262d', '#2b2b2e'][i], 0, 0.35, 0); box(c, 2.2, 0.9, 2.4, '#9fdcf6', 0, 1.45, -0.3); for (const [a, b] of [[-1.2, 1.6], [1.2, 1.6], [-1.2, -1.6], [1.2, -1.6]]) { const w = cyl(c, 0.5, 0.5, 0.4, '#1a1a1a', a, 0.5, b, 10); w.rotation.z = Math.PI / 2; } }
+  // ===== the palace itself (≈ 30 houses) =====
+  const P = new THREE.Group(); P.position.set(X, 0.05, Z); g.add(P);
+  box(P, 120, 1.6, 48, '#d9d0bc', 0, 0, 0);                                   // podium
+  for (let i = 0; i < 6; i++) box(P, 26 - i * 0.6, 0.27, 2.2, '#efe8d8', 0, i * 0.27, 25 + 1.1 * (5 - i));  // grand stairs
+  box(P, 3.4, 0.05, 14, '#c0262d', 0, 1.63, 23);
+  const block = (w, h, d, x, z, floors) => {
+    box(P, w, h, d, CREAM, x, 1.6, z); box(P, w + 1, 0.8, d + 1, CREAM2, x, 1.6 + h, z); box(P, w + 0.4, 0.5, d + 0.4, CREAM2, x, 1.6, z);
+    const fh = h / floors;
+    for (let f = 0; f < floors; f++) for (let c = 0; c < Math.floor(w / 3.4); c++) {
+      const wx = x - w / 2 + 1.7 + c * 3.4 + (w % 3.4) / 2; if (f === 0 && Math.abs(wx) < 6 && x === 0) continue;
+      box(P, 1.5, fh * 0.55, 0.15, null, wx, 1.6 + f * fh + fh * 0.2, z + d / 2 + 0.05, WN()); box(P, 1.9, 0.25, 0.4, CREAM2, wx, 1.6 + f * fh + fh * 0.2 + fh * 0.55, z + d / 2 + 0.1);
+      box(P, 1.5, fh * 0.55, 0.15, null, wx, 1.6 + f * fh + fh * 0.2, z - d / 2 - 0.05, WN());
+    }
+    for (let c = 0; c < Math.floor(w / 2.4); c++) box(P, 1.0, 1.0, 0.5, CREAM2, x - w / 2 + 1.2 + c * 2.4, 2.4 + h, z + d / 2 + 0.2);  // balustrade
+  };
+  block(36, 20, 30, 0, 0, 4);                     // central corps
+  block(34, 15, 24, -35, -2, 3); block(34, 15, 24, 35, -2, 3);   // wings
+  block(14, 15, 34, -57, 3, 3); block(14, 15, 34, 57, 3, 3);     // end pavilions forward
+  // portico with columns + pediment
+  for (let i = 0; i < 8; i++) { const cx2 = -12.25 + i * 3.5; cyl(P, 0.75, 0.85, 16, CREAM, cx2, 1.6, 17.5, 12); box(P, 2, 0.6, 2, CREAM2, cx2, 17.6, 17.5); box(P, 2, 0.5, 2, CREAM2, cx2, 1.6, 17.5); }
+  box(P, 29, 1.6, 4.4, CREAM2, 0, 18, 17); 
+  { const sh = new THREE.Shape(); sh.moveTo(-15, 0); sh.lineTo(15, 0); sh.lineTo(0, 6.5); sh.lineTo(-15, 0); const pg = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 4.4, bevelEnabled: false }), M(CREAM)); pg.position.set(0, 19.6, 14.8); P.add(pg); sph(P, 1.6, null, 0, 22.3, 19.4, GOLD).scale.set(1, 1, 0.3); }
+  box(P, 5, 8, 0.3, '#5a2e1c', 0, 1.6, 15.06); box(P, 5.6, 0.5, 0.4, null, 0, 9.6, 15.1, GOLD);
+  plate(P, signTex([['@artem_hat', 64, '#f2c14e']], { bg: '#16223a', w: 512, h: 100, border: '#f2c14e', bw: 5 }), 9, 1.75, 0, 21, 19.3);
+  // central dome on drum + spire + flag
+  cyl(P, 11, 11, 7, CREAM, 0, 23.4, 0, 24); for (let i = 0; i < 16; i++) { const a = i / 16 * Math.PI * 2; box(P, 1.2, 4, 0.2, null, Math.sin(a) * 11.05, 24.8, Math.cos(a) * 11.05, WN()).rotation.y = a; }
+  const dome = sph(P, 11, null, 0, 30.4, 0, GOLD, 28, 14); dome.scale.y = 0.9; 
+  cyl(P, 1.6, 2.2, 4, CREAM2, 0, 39.5, 0, 12); sph(P, 1.6, null, 0, 44.6, 0, GOLD); cyl(P, 0.15, 0.15, 7, '#2b2f3a', 0, 45.5, 0, 6);
+  box(P, 0.05, 2.2, 3.4, '#c0262d', 0, 50.1, 1.7);
+  // corner towers with blue spires
+  for (const [tx, tz] of [[-57, -14], [57, -14], [-57, 20], [57, 20]]) { cyl(P, 4, 4.4, 24, CREAM, tx, 1.6, tz, 16); cyl(P, 4.6, 4.6, 1, CREAM2, tx, 25.6, tz, 16); cone(P, 4.8, 12, ROOF, tx, 26.6, tz, 16); sph(P, 0.7, null, tx, 39.3, tz, GOLD); for (let k = 0; k < 3; k++) for (let j = 0; j < 6; j++) { const a = j / 6 * Math.PI * 2; box(P, 1, 2.2, 0.2, null, tx + Math.sin(a) * 4.25, 5 + k * 6.5, tz + Math.cos(a) * 4.25, WN()).rotation.y = a; } }
+  // wing roofs (mansard, blue) + small domes
+  for (const s of [-1, 1]) { const r = box(P, 34, 4, 22, ROOF, s * 35, 18.4, -2); r.scale.set(1, 1, 1); sph(P, 3.4, null, s * 35, 22.4, -2, GOLD, 16, 8).scale.y = 0.8; box(P, 13, 4, 32, ROOF, s * 57, 18.4, 3); }
+  box(P, 34, 2.4, 28, ROOF, 0, 23.4 - 0.05, 0).visible = false;
+  // statues by the stairs (golden lions)
+  for (const s of [-1, 1]) { box(P, 3, 3, 4, '#d9d0bc', s * 16, 0, 31); const l = sph(P, 1.2, null, s * 16, 4.4, 31, GOLD); l.scale.set(1, 0.9, 1.6); sph(P, 0.8, null, s * 16, 5.4, 32.6, GOLD); }
+  POIS.push({ key: 'palace', x: X, y: 62, z: Z, html: '👑 ДВОРЕЦ<i>@artem_hat</i>' });
+  houses.push({ nick: PAL.nick, type: 'palace', req: 'дворец за городом', feat: true, star: true, shield: true, palace: true, obj: g, x: X, y: 0.26, z: Z, face: 1, h: 50, big: true, dist: 'Загород', addr: 'Дворцовая дорога, 1' });
 }
 
 // ---------------- merge static geometry ----------------
@@ -741,7 +841,7 @@ function showObj(o) {
 
 // ---------------- camera ----------------
 const cam = { x: 0, z: 10, d: 260, yaw: 0.0, fly: null, idle: true };
-const LIM = { x0: MEGA.x0 - 10, x1: AIR.x1 + 10, z0: SECRET.z - 30, z1: CZ + 175, d0: 18, d1: 560 };
+const LIM = { x0: MEGA.x0 - 10, x1: AIR.x1 + 10, z0: PAL.z - 110, z1: CZ + 175, d0: 18, d1: 560 };
 const pitchOf = (d) => lerp(0.36, 1.14, sm(12, 230, d));
 function applyCam(c = cam) {
   const p = pitchOf(c.d);
@@ -811,10 +911,10 @@ function buildMarker() {
   marker = new THREE.Mesh(new THREE.RingGeometry(3.1, 3.5, 40).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: '#ff5a3c', transparent: true, opacity: 0.95, depthWrite: false })); marker.visible = false; scene.add(marker);
   beam = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.2, 90, 28, 1, true), new THREE.MeshBasicMaterial({ color: '#ffc23d', transparent: true, opacity: 0.1, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending })); beam.visible = false; scene.add(beam);
 }
-function viewFor(h) { const d = clamp(h.h * 2.2 + 30, 36, 85); return [h.x, h.z, d, h.face > 0 ? 0.35 : Math.PI + 0.35]; }
+function viewFor(h) { if (h.palace) return [h.x, h.z + 20, 230, 0.5]; const d = clamp(h.h * 2.2 + 30, 36, 85); return [h.x, h.z, d, h.face > 0 ? 0.35 : Math.PI + 0.35]; }
 function select(h, fly = true) {
   selected = h; marker.visible = beam.visible = !!h;
-  if (h) { const r = h.big ? 1.8 : 1; marker.scale.set(r, 1, r); marker.position.set(h.x, 0.32, h.z); beam.position.set(h.x, 45, h.z); if (fly) { const v = viewFor(h); flyTo(v[0], v[1], v[2], v[3]); } }
+  if (h) { const r = h.palace ? 14 : h.big ? 1.8 : 1; marker.scale.set(r, 1, r); marker.position.set(h.x, 0.32, h.z); beam.position.set(h.x, 45, h.z); if (fly) { const v = viewFor(h); flyTo(v[0], v[1], v[2], v[3]); } }
   markDirty();
 }
 
@@ -854,11 +954,12 @@ function modal(html) { const m = $('#modal'); m.querySelector('.in').innerHTML =
 function closeModal() { $('#modal').classList.remove('on'); }
 const PLACES = [['🏛', 'Мэрия', 'идут выборы мэра', 'hall', [HALL.x, HALL.z + 8, 100, 0.25]], ['🎄', 'Главная ёлка', 'игрушки повесим позже', 'tree', [TREE.x, TREE.z + 4, 135, 0.4]],
   ['⛪', 'Православный храм', 'кафедральный собор', 'church', [CHUR.x + 8, CHUR.z + 10, 200, 0.45]], ['🕌', 'Мечеть', 'соборная мечеть', 'mosque', [MOSQ.x - 14, MOSQ.z + 8, 205, -0.4]],
-  ['🛍', 'Торговый квартал', 'рынок, 2 ТЦ, бизнесы, аренда', 'mall1', [108, 8, 130, 0.3]], ['🌊', 'Океан и пирс', 'пирс откроется на 10 000', 'pier', [0, OCEAN_Z + 30, 170, 0.5]],
-  ['🏙', 'Мегаполис', 'стройка начнётся на 10 000', 'mega', [(MEGA.x0 + MEGA.x1) / 2, 0, 330, -0.7]], ['✈️', 'Аэропорт', 'откроется на 15 000', 'air', [AIR.x0 + 140, -40, 330, 0.8]],
-  ['🔒', 'Секретная локация', 'скоро откроем', 'secret', [SECRET.x, SECRET.z + 20, 140, 0]], ['🌋', 'Вулкан', 'следующая катастрофа', 'volcano', [VOLC.x + 200, VOLC.z + 250, 380, 0.6]]];
+  ['🛍', 'Торговый квартал', 'рынок, 2 ТЦ, бизнесы, аренда', 'mall1', [108, 8, 130, 0.3]], ['🌊', 'Океан и пирс', 'пирс открыт — нас 10 000!', 'pier', [0, OCEAN_Z + 30, 170, 0.5]],
+  ['🏙', 'Мегаполис', 'стройка началась!', 'mega', [(MEGA.x0 + MEGA.x1) / 2, 0, 330, -0.7]], ['✈️', 'Аэропорт', 'откроется на 15 000', 'air', [AIR.x0 + 140, -40, 330, 0.8]],
+  ['👑', 'Дворец @artem_hat', 'отдельный дворец за городом', 'palace', [PAL.x, PAL.z + 30, 240, 0.5]], ['🔒', 'Секретная локация', 'скоро откроем', 'secret', [SECRET.x, SECRET.z + 20, 140, 0]], ['🌋', 'Вулкан', 'следующая катастрофа', 'volcano', [VOLC.x + 200, VOLC.z + 250, 380, 0.6]]];
 function goPlace(k) {
   const p = PLACES.find(q => q[3] === k); if (!p) return; select(null); closeCard(); hideWelcome(); flyTo(...p[4]);
+  if (k === 'palace') { const h = houses.find(x => x.palace); select(h); houseCard(h, false); return; }
   const z = ZONES.find(q => q.key === k); if (k === 'hall') hallCard(); else if (z) setTimeout(z.fn, 900);
 }
 function openPlaces() {
@@ -878,7 +979,7 @@ function openUpgrade(h) {
     <div class="step"><span>3</span><div><b>Особняк: бассейн и машина</b><i>Сделай репост выпуска в сторис с отметкой @${IG}</i></div></div>
     <div class="row"><a class="b1" target="_blank" href="https://instagram.com/${IG}">Открыть @${IG}</a></div>`);
 }
-const MAYOR_TOP = [['am.irkhan7793', 33], ['raimjanov_umka', 27], ['kha1id_2015', 25], ['ayima_imamidinova', 19], ['kiraplokhaia', 17]];
+const MAYOR_TOP = [['abdullowo33', 176], ['idris.tj__', 121], ['camal16.03.2016', 99], ['ramazanovaa2211', 76], ['liza_b_n_', 65]];
 const fmt = (n) => n.toLocaleString('ru-RU');
 const prog = (goal) => `<div class="prog"><i style="width:${Math.min(100, POP / goal * 100).toFixed(1)}%"></i></div><div class="progt"><b>${fmt(POP)}</b> из ${fmt(goal)} подписчиков · осталось ${fmt(Math.max(0, goal - POP))}</div>`;
 const igBtn = (t) => `<div class="row"><a class="b1" target="_blank" href="https://instagram.com/${IG}">${t}</a></div>`;
@@ -908,12 +1009,12 @@ function churchCard() {
     <div class="txt">Главный православный храм Города Домино с золотыми куполами. Рядом большая парковка и подъезд.</div>`);
 }
 function megaCard() {
-  sheet(`<div class="kick">🏙 Мегаполис</div><div class="nick">Стройка начнётся на 10 000</div>
-    <div class="txt">Здесь вырастут высотки с квартирами для подписчиков. Пока на этом месте только проект и краны.</div>${prog(10000)}${igBtn('Позвать друзей → подписка')}`);
+  sheet(`<div class="kick">🏙 Мегаполис</div><div class="nick">🏗 Стройка началась!</div>
+    <div class="txt">Нас 10 000 — и в Мегаполисе заработали краны. Первые высотки уже растут этаж за этажом. Чем больше жителей, тем выше дома. Заселение квартир — на 15 000.</div>${prog(15000)}${igBtn('Позвать друзей → подписка')}`);
 }
 function pierCard() {
-  sheet(`<div class="kick">🌊 Океан и пирс</div><div class="nick">Пирс откроется на 10 000</div>
-    <div class="txt">Пирс ещё строится. Откроем его, когда в городе будет 10 000 жителей.</div>${prog(10000)}${igBtn('Подписаться @' + IG)}`);
+  sheet(`<div class="kick">🌊 Океан и пирс</div><div class="nick">🎉 Пирс открыт!</div>
+    <div class="txt">Нас стало 10 000 — и пирс открылся. Гуляй до самого края: там кафе «Пирс», зонтики, флаги и лодки у причала. Спасибо каждому жителю!</div>${igBtn('Подписаться @' + IG)}`);
 }
 function airCard() {
   sheet(`<div class="kick">✈️ Аэропорт</div><div class="nick">Откроется на 15 000</div>
@@ -1030,7 +1131,7 @@ function onTap(sx, sy) {
   }
   const z = zoneAt(sx, sy); if (z) { select(null); z.fn(); return; }
   if (ray.ray.intersectPlane(gPlane, gHit)) {
-    const g = houses.find(h => Math.abs(gHit.x - h.x) < (h.big ? LOT : LOT / 2) && Math.abs(gHit.z - h.z) < LOT / 2);
+    const g = houses.find(h => h.palace ? Math.abs(gHit.x - h.x) < 70 && Math.abs(gHit.z - h.z) < 80 : Math.abs(gHit.x - h.x) < (h.big ? LOT : LOT / 2) && Math.abs(gHit.z - h.z) < LOT / 2);
     if (g) { select(g); houseCard(g, false); return; }
   }
   let best = null, bd = 1e9;

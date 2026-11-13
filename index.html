@@ -4,7 +4,7 @@
 <title>Город Домино — найди свой дом</title>
 <meta name="description" content="1 подписчик = 1 дом. Найди свой дом в 3D-городе Домино по нику из Instagram.">
 <meta property="og:title" content="Город Домино — найди свой дом 🏠">
-<meta property="og:description" content="1 подписчик = 1 дом. Найди свой дом, отбейся от НЛО и выбери мэра.">
+<meta property="og:description" content="1 подписчик = 1 дом. Найди свой дом, отбейся от зомби и выбери мэра.">
 <meta name="theme-color" content="#fffaf2">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
@@ -128,14 +128,14 @@ body.playing #hud,body.playing #dock,body.playing #side,body.playing #labels,bod
 <body>
 <canvas id="c"></canvas><div id="labels"></div>
 <div id="hud">
-  <div class="brand"><div class="tile"><i></i><i></i><i></i></div><div><h1>ГОРОД ДОМИНО</h1><div class="sub"><b id="pop">6137</b> жителей · 1 подписчик = 1 дом</div></div></div>
+  <div class="brand"><div class="tile"><i></i><i></i><i></i></div><div><h1>ГОРОД ДОМИНО</h1><div class="sub"><b id="pop">10849</b> жителей · 1 подписчик = 1 дом</div></div></div>
   <div class="news"><span class="ic">📢</span><div class="tk"><div id="ticker"></div></div></div>
   <button id="elect"><span class="ei">🗳</span><span><b>Идут выборы МЭРА!</b><i>Мэром станет тот, у кого больше комментариев</i></span><span class="eg">→</span></button>
 </div>
 <div id="side"><button id="zin" aria-label="Приблизить">＋</button><button id="zout" aria-label="Отдалить">－</button><button id="rot" aria-label="Повернуть">⟳</button><button id="home" aria-label="К мэрии">⌂</button></div>
 <div id="dock">
   <div class="search"><span>🔍</span><input id="snick" placeholder="Найди свой дом по нику" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="sgo">Найти</button></div>
-  <div class="tabs"><button id="tPlaces"><span>✨</span>Места</button><button id="tGame" class="hot"><span>🛸</span>Играть</button><button id="tElect"><span>🗳</span>Выборы</button><button id="tHow"><span>🏠</span>Как попасть</button></div>
+  <div class="tabs"><button id="tPlaces"><span>✨</span>Места</button><button id="tGame" class="hot"><span>🧟</span>Играть</button><button id="tElect"><span>🗳</span>Выборы</button><button id="tHow"><span>🏠</span>Как попасть</button></div>
 </div>
 <div id="card"></div>
 <div id="modal"><div class="in"></div></div>
@@ -145,8 +145,8 @@ body.playing #hud,body.playing #dock,body.playing #side,body.playing #labels,bod
   <h2>ГОРОД<br><em>ДОМИНО</em></h2>
   <div class="t2"><b>1 подписчик = 1 дом.</b> Твой уже стоит — найди его!</div>
   <div class="wsearch"><input id="wnick" placeholder="Твой ник в Instagram" autocapitalize="off" autocomplete="off" spellcheck="false"><button id="wgo">Найти мой дом →</button></div>
-  <button id="wgame">🛸 Отбиться от НЛО — мини-игра</button>
-  <div class="wfoot"><button id="walk">Просто погулять по городу</button><div class="pop"><b id="pop2">6137</b><br>жителей</div></div>
+  <button id="wgame">🧟 Отбиться от зомби — мини-игра</button>
+  <div class="wfoot"><button id="walk">Просто погулять по городу</button><div class="pop"><b id="pop2">10849</b><br>жителей</div></div>
   <div class="wsub">Ещё нет дома? <a href="https://instagram.com/domino.gorod" target="_blank">Подпишись на @domino.gorod</a></div>
 </div>
 <div id="loader"><div class="wtiles"><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div><div class="tile"><i></i><i></i><i></i></div></div><div id="loadtxt">Строим город…</div></div>
